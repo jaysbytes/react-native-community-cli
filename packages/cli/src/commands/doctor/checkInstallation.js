@@ -1,3 +1,4 @@
+// @flow
 import semver from 'semver';
 import commandExists from 'command-exists';
 
@@ -6,7 +7,7 @@ const PACKAGE_MANAGERS = {
   NPM: 'NPM',
 };
 
-const isSoftwareInstalled = async command => {
+const isSoftwareInstalled = async (command: string) => {
   try {
     await commandExists(command);
 
@@ -16,7 +17,12 @@ const isSoftwareInstalled = async command => {
   }
 };
 
-const doesSoftwareNeedToBeFixed = ({version, versionRange}) =>
-  version === 'Not Found' || !semver.satisfies(version, versionRange);
+const doesSoftwareNeedToBeFixed = ({
+  version,
+  versionRange,
+}: {
+  version: string,
+  versionRange: string,
+}) => version === 'Not Found' || !semver.satisfies(version, versionRange);
 
 export {PACKAGE_MANAGERS, isSoftwareInstalled, doesSoftwareNeedToBeFixed};

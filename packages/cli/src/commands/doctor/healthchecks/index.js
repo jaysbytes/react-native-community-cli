@@ -1,3 +1,4 @@
+// @flow
 import nodeJS from './nodeJS';
 import {yarn, npm} from './packageManagers';
 import watchman from './watchman';
@@ -13,14 +14,18 @@ export const HEALTHCHECK_TYPES = {
   WARNING: 'WARNING',
 };
 
-export const getHealthchecks = ({contributor}) => ({
+type Options = {
+  fix: boolean | void,
+  contributor: boolean | void,
+};
+
+export const getHealthchecks = ({contributor}: Options) => ({
   common: {
     label: 'Common',
     healthchecks: [nodeJS, yarn, npm, watchman],
   },
   android: {
     label: 'Android',
-    // TODO: Android NDK should be shown only with a special flag
     healthchecks: [
       androidHomeEnvVariable,
       androidSDK,
